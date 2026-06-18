@@ -29,7 +29,6 @@
             color: var(--black);
             line-height: 1.6;
             overflow-x: hidden;
-            /* CORRECCIÓN: Fuerza al degradado a ocupar toda la pantalla siempre */
             min-height: 100vh; 
             display: flex;
             flex-direction: column;
@@ -52,7 +51,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* CORRECCIÓN: Más alto y amplio para servidores públicos */
         header {
             text-align: center;
             padding: 60px 20px; 
@@ -64,7 +62,6 @@
             border-bottom: 2px solid rgba(255, 255, 255, 0.3);
         }
 
-        /* CORRECCIÓN: Título más imponente y grande en web */
         h1 {
             font-family: 'Impact', 'Arial Black', sans-serif;
             font-size: 3.8rem; 
@@ -128,13 +125,14 @@
             transform: translateY(-2px);
         }
 
+        /* Contenedor de la tienda con ancho máximo */
         .main-container {
             max-width: 1200px;
             width: 100%;
             margin: 40px auto;
             padding: 0 20px;
             animation: entradaSuave 0.8s ease-out;
-            flex: 1; /* Empuja al footer abajo si hay pocos productos */
+            flex: 1; 
         }
 
         .store-intro {
@@ -352,13 +350,14 @@
             box-shadow: 0 5px 15px rgba(239, 68, 68, 0.4);
         }
 
+        /* El footer ahora ocupa el 100% de la pantalla real */
         footer {
             background-color: var(--silver);
             color: #334155;
             padding: 30px 20px;
-            margin-top: auto; /* Se queda abajo fijado pase lo que pase */
             border-top: 1px solid #94a3b8;
             width: 100%;
+            margin-top: auto; 
         }
 
         .footer-content {
@@ -474,6 +473,7 @@
             border-radius: 6px;
             font-size: 1rem;
             outline: none;
+            transition: border-color 0.3s;
         }
 
         .form-group input:focus,
@@ -594,6 +594,7 @@
         </div>
     </header>
 
+    <!-- AQUÍ EMPIEZA EL CONTENEDOR LIMITADO A 1200PX -->
     <div class="main-container">
 
         <section class="store-intro">
@@ -633,8 +634,28 @@
             </main>
 
         </div>
-    </div>
+    </div> 
+    <!-- AQUÍ TERMINA EL CONTENEDOR LIMITADO (AQUÍ SE CERRÓ BIEN) -->
 
+
+    <!-- EL FOOTER AHORA ESTÁ AFUERA, ASÍ QUE VA DE EXTREMO A EXTREMO -->
+    <footer>
+        <div class="footer-content">
+            <p class="footer-disclaimer">
+                <strong>Exención de responsabilidad :</strong> Las imágenes de los productos y del establecimiento mostradas en esta plantilla son meramente ilustrativas y de simulación. Los precios, especificaciones técnicas y disponibilidad de los objetos de pesca descritos están sujetos a modificaciones sin previo aviso por parte de la administración de la tienda. Asegúrese de revisar la reglamentación de pesca local vigente antes de realizar capturas en entornos naturales.
+            </p>
+
+            <div class="footer-links">
+                <a href="#privacidad">Política de Privacidad</a>
+                <a href="#contacto">Contacto y Soporte</a>
+            </div>
+
+            <p class="footer-copy">&copy; 2026 A PUNTO DEL PIQUE S.A. - Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+
+    <!-- INTERFACES FLOTANTES (MODALS) -->
     <div class="modal-overlay" id="modal-compra">
         <div class="modal-box">
             <h2>Datos de Facturación</h2>
@@ -678,21 +699,6 @@
         </div>
     </div>
 
-    <footer>
-        <div class="footer-content">
-            <p class="footer-disclaimer">
-                <strong>Exención de responsabilidad :</strong> Las imágenes de los productos y del establecimiento mostradas en esta plantilla son meramente ilustrativas y de simulación. Los precios, especificaciones técnicas y disponibilidad de los objetos de pesca descritos están sujetos a modificaciones sin previo aviso por parte de la administración de la tienda. Asegúrese de revisar la reglamentación de pesca local vigente antes de realizar capturas en entornos naturales.
-            </p>
-
-            <div class="footer-links">
-                <a href="#privacidad">Política de Privacidad</a>
-                <a href="#contacto">Contacto y Soporte</a>
-            </div>
-
-            <p class="footer-copy">&copy; 2026 A PUNTO DEL PIQUE S.A. - Todos los derechos reservados.</p>
-        </div>
-    </footer>
-
     <script>
         const productosRegistro = [
             {
@@ -730,7 +736,7 @@
             {
                 id: 10,
                 titulo: "Reel Rotativo Baitcast 18r",
-                descripcion: "Reel rotativo robusto y confiable, ideal para pesca variada and de embarcado.",
+                descripcion: "Reel rotativo robusto y confiable, ideal para pesca variada y de embarcado.",
                 precio: "$62.000",
                 categoria: "reels",
                 imagen: "imagen/reel2.webp"
@@ -850,4 +856,103 @@
                 return;
             }
 
-            let filaActual
+            let filaActual = null;
+
+            listaProductos.forEach((producto, indice) => {
+                if (indice % 3 === 0) {
+                    filaActual = document.createElement('div');
+                    filaActual.className = 'grid-row';
+                    contenedor.appendChild(filaActual);
+                }
+
+                const columnaTarjeta = document.createElement('div');
+                columnaTarjeta.className = 'product-card';
+                columnaTarjeta.innerHTML = `
+                    <div class="product-card-inner">
+                        <img src="${producto.imagen}" alt="${producto.titulo}" class="product-image" style="cursor: zoom-in;" onclick="abrirFotoGrande('${producto.imagen}')">
+                        <div class="product-title">${producto.titulo}</div>
+                        <div class="product-description">${producto.descripcion}</div>
+                        <div class="product-price">${producto.precio}</div>
+                        <button class="buy-btn" onclick="abrirModal('${producto.titulo}', '${producto.precio}')">COMPRAR</button>
+                    </div>
+                `;
+
+                filaActual.appendChild(columnaTarjeta);
+            });
+        }
+
+        function abrirModal(nombreProducto, precioProducto) {
+            document.getElementById('prod-seleccionado').innerText = `Artículo: ${nombreProducto} (${precioProducto})`;
+            document.getElementById('modal-compra').classList.add('active');
+        }
+
+        function cerrarModal() {
+            document.getElementById('modal-compra').classList.remove('active');
+            document.getElementById('formulario-registro').reset();
+        }
+
+        function procesarFormulario(event) {
+            event.preventDefault();
+
+            const datosComprador = {
+                nombre: document.getElementById('nombre').value,
+                apellido: document.getElementById('apellido').value,
+                telefono: document.getElementById('telefono').value,
+                pago: document.getElementById('metodo-pago').value
+            };
+
+            alert(`¡Muchas gracias por tu compra, ${datosComprador.nombre}! \nNos comunicaremos al teléfono ${datosComprador.telefono} para coordinar el pago vía ${datosComprador.pago}.`);
+            cerrarModal();
+        }
+
+        document.querySelectorAll('.sidebar-list a').forEach(enlace => {
+            enlace.addEventListener('click', function (e) {
+                e.preventDefault();
+                const filtro = this.getAttribute('data-filter');
+                if (filtro === 'todos') {
+                    renderizarGrid(productosRegistro);
+                } else {
+                    const filtrados = productosRegistro.filter(p => p.categoria === filtro);
+                    renderizarGrid(filtrados);
+                }
+            });
+        });
+
+        function eliminarAcentos(texto) {
+            return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        }
+
+        function ejecutarBusqueda() {
+            const textoBuscado = eliminarAcentos(document.getElementById('input-buscador').value.toLowerCase().trim());
+            
+            const filtradosPorBusqueda = productosRegistro.filter(p => {
+                const tituloLimpio = eliminarAcentos(p.titulo.toLowerCase());
+                const descLimpia = eliminarAcentos(p.descripcion.toLowerCase());
+                return tituloLimpio.includes(textoBuscado) || descLimpia.includes(textoBuscado);
+            });
+            
+            renderizarGrid(filtradosPorBusqueda);
+        }
+
+        document.getElementById('btn-buscar').addEventListener('click', ejecutarBusqueda);
+        document.getElementById('input-buscador').addEventListener('keyup', function (e) {
+            if (e.key === 'Enter') ejecutarBusqueda();
+        });
+
+        function abrirFotoGrande(enlaceImagen) {
+            document.getElementById('foto-ampliada').src = enlaceImagen;
+            document.getElementById('visor-foto').classList.add('active');
+        }
+
+        function cerrarFotoGrande() {
+            document.getElementById('visor-foto').classList.remove('active');
+            setTimeout(() => {
+                document.getElementById('foto-ampliada').src = "";
+            }, 300);
+        }
+
+        renderizarGrid(productosRegistro);
+    </script>
+</body>
+
+</html>
