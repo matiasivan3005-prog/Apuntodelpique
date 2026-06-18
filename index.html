@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Punto del Pique - Artículos de Pesca</title>
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #d4fc79 0%, #96e6a1 50%, #f5f5dc 100%);
+            --silver: #cbd5e1;
+            --yellow: #fde047;
+            --black: #0f172a;
+            --red: #ef4444;
+            --white: #ffffff;
+            --dark-green: #14532d;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--black);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh; 
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes entradaSuave {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes flujoAgua {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px; 
+            width: 100%;
+            background: linear-gradient(-45deg, rgba(212, 252, 121, 0.4), rgba(150, 230, 161, 0.4), rgba(245, 245, 220, 0.4));
+            background-size: 400% 400%;
+            animation: flujoAgua 12s ease infinite;
+            backdrop-filter: blur(5px);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        h1 {
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            font-size: 3.8rem; 
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+            color: #000000;
+            text-shadow: -2px -2px 0 #ffffff,
+                          2px -2px 0 #ffffff,
+                         -2px  2px 0 #ffffff,
+                          2px  2px 0 #ffffff;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+            color: var(--dark-green);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .search-container {
+            max-width: 550px;
+            margin: 30px auto 0 auto;
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-container input {
+            flex: 1;
+            padding: 14px 22px;
+            border: 2px solid var(--dark-green);
+            border-radius: 25px;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .search-container input:focus {
+            box-shadow: 0 0 15px rgba(20, 83, 45, 0.4);
+            border-color: var(--black);
+            background-color: #ffffff;
+        }
+
+        .search-container button {
+            padding: 14px 30px;
+            background-color: var(--yellow);
+            color: var(--black);
+            border: 2px solid var(--dark-green);
+            border-radius: 25px;
+            font-family: 'Impact', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-container button:hover {
+            background-color: var(--red);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        .main-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 40px auto;
+            padding: 0 20px;
+            animation: entradaSuave 0.8s ease-out;
+            flex: 1; 
+        }
+
+        .store-intro {
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            display: table;
+            width: 100%;
+        }
+
+        .store-image-container {
+            display: table-cell;
+            width: 45%;
+            vertical-align: middle;
+            padding-right: 30px;
+        }
+
+        .store-image {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            background-color: #e2e8f0;
+            min-height: 250px;
+            object-fit: contain;
+        }
+
+        .features-container {
+            display: table-cell;
+            width: 55%;
+            vertical-align: middle;
+        }
+
+        .features-container h2 {
+            color: var(--dark-green);
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--dark-green);
+            padding-bottom: 5px;
+        }
+
+        .features-list {
+            list-style: none;
+        }
+
+        .features-list li {
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+            font-size: 1.1rem;
+        }
+
+        .features-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--dark-green);
+            font-size: 1.3rem;
+            top: -2px;
+        }
+
+        .catalog-layout {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        .sidebar {
+            display: table-cell;
+            width: 25%;
+            vertical-align: top;
+            padding-right: 30px;
+        }
+
+        .sidebar-nav {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .sidebar-nav h3 {
+            color: var(--dark-green);
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding-bottom: 5px;
+        }
+
+        .sidebar-list {
+            list-style: none;
+        }
+
+        .sidebar-list li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-list a {
+            display: block;
+            padding: 8px 12px;
+            color: var(--black);
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-left: 0px solid var(--dark-green);
+        }
+
+        .sidebar-list a:hover {
+            background-color: rgba(20, 83, 45, 0.08);
+            color: var(--dark-green);
+            padding-left: 18px;
+            border-left: 4px solid var(--dark-green);
+        }
+
+        .products-section {
+            display: table-cell;
+            width: 75%;
+            vertical-align: top;
+        }
+
+        .products-grid {
+            display: block;
+            width: 100%;
+        }
+
+        .grid-row {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+            margin-bottom: 25px;
+        }
+
+        .product-card {
+            display: table-cell;
+            width: 33.33%;
+            padding: 0 12px;
+        }
+
+        .product-card-inner {
+            background: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product-card-inner:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(20, 83, 45, 0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 180px;
+            background-color: #f1f5f9;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .product-card-inner:hover .product-image {
+            transform: scale(1.03);
+        }
+
+        .product-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: 12px;
+            padding: 0 5px;
+        }
+
+        .product-description {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 12px;
+            height: 55px;
+            overflow: hidden;
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dark-green);
+            margin-bottom: 15px;
+        }
+
+        .buy-btn {
+            display: inline-block;
+            width: 100%;
+            padding: 10px 0;
+            background-color: var(--yellow);
+            color: var(--black);
+            border: none;
+            border-radius: 6px;
+            font-family: 'Impact', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .buy-btn:hover {
+            background-color: var(--red);
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(239, 68, 68, 0.4);
+        }
+
+        footer {
+            background-color: var(--silver);
+            color: #334155;
+            padding: 30px 20px;
+            border-top: 1px solid #94a3b8;
+            width: 100%;
+            margin-top: auto; 
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-disclaimer {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            color: #475569;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-links {
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: var(--dark-green);
+            text-decoration: none;
+            font-weight: 600;
+            margin: 0 15px;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--red);
+            text-decoration: underline;
+        }
+
+        .footer-copy {
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-box {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform: scale(0.8) translateY(-30px);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-box h2 {
+            color: var(--dark-green);
+            font-family: 'Impact', sans-serif;
+            letter-spacing: 1px;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+            border-bottom: 2px solid var(--silver);
+            padding-bottom: 8px;
+        }
+
+        .producto-seleccionado-txt {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #475569;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid var(--silver);
+            border-radius: 6px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--dark-green);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .btn-form {
+            flex: 1;
+            padding: 12px;
+            font-family: 'Impact', sans-serif;
+            font-size: 1.1rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+
+        .btn-confirmar {
+            background-color: var(--yellow);
+            color: var(--black);
+        }
+
+        .btn-confirmar:hover {
+            background-color: var(--dark-green);
+            color: var(--white);
+        }
+
+        .btn-cancelar {
+            background-color: #e2e8f0;
+            color: #475569;
+        }
+
+        .btn-cancelar:hover {
+            background-color: var(--red);
+            color: var(--white);
+        }
+
+        .foto-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .foto-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .foto-grande-contenedor {
+            position: relative;
+            max-width: 90%;
+            max-height: 85%;
+            animation: zoomSuave 0.3s ease-out;
+        }
+
+        .foto-grande-contenedor img {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 8px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+            display: block;
+        }
+
+        .btn-cerrar-foto {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 2.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+            transition: color 0.2s;
+        }
+
+        .btn-cerrar-foto:hover {
+            color: var(--red);
+        }
+
+        @keyframes zoomSuave {
+            from { transform: scale(0.9); }
+            to { transform: scale(1); }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>A PUNTO DEL PIQUE</h1>
+        <p class="subtitle">Tu tienda de confianza para equipamiento y aventura de pesca</p>
+
+        <div class="search-container">
+            <input type="text" id="input-buscador" placeholder="¿Qué artículo de pesca estás buscando?">
+            <button type="button" id="btn-buscar">BUSCAR</button>
+        </div>
+    </header>
+
+    <div class="main-container">
+
+        <section class="store-intro">
+            <div class="store-image-container">
+                <img src="imagen/logo.png" alt="Casa de Venta Anzuelo & Río" class="store-image">
+            </div>
+            <div class="features-container">
+                <h2>Nuestras Características</h2>
+                <ul class="features-list">
+                    <li><strong>Variedad Absoluta:</strong> Amplio stock en cañas, reels, señuelos y líneas para todas las modalidades.</li>
+                    <li><strong>Asesoramiento Experto:</strong> Atendido por pescadores apasionados listos para guiarte.</li>
+                    <li><strong>Calidad Garantizada:</strong> Trabajamos únicamente con marcas líderes.</li>
+                    <li><strong>Envíos a todo el país:</strong> Preparación segura y despacho inmediato.</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="catalog-layout">
+
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <h3>Categorías</h3>
+                    <ul class="sidebar-list">
+                        <li><a href="#" data-filter="todos">Mostrar Todos</a></li>
+                        <li><a href="#" data-filter="canas">Cañas de Pescar</a></li>
+                        <li><a href="#" data-filter="reels">Reels / Carretes</a></li>
+                        <li><a href="#" data-filter="anzuelos">Anzuelos</a></li>
+                        <li><a href="#" data-filter="senuelos">Señuelos y Moscas</a></li>
+                        <li><a href="#" data-filter="accesorios">Cajas y Accesorios</a></li>
+                        <li><a href="#" data-filter="indumentaria">Indumentaria Técnica</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <main class="products-section">
+                <div class="products-grid" id="contenedor-productos"></div>
+            </main>
+
+        </div>
+    </div> 
+
+    <footer>
+        <div class="footer-content">
+            <p class="footer-disclaimer">
+                <strong>Exención de responsabilidad :</strong> Las imágenes de los productos y del establecimiento mostradas en esta plantilla son meramente ilustrativas y de simulación. Los precios, especificaciones técnicas y disponibilidad de los objetos de pesca descritos están sujetos a modificaciones sin previo aviso por parte de la administración de la tienda. Asegúrese de revisar la reglamentación de pesca local vigente antes de realizar capturas en entornos naturales.
+            </p>
+
+            <div class="footer-links">
+                <a href="#privacidad">Política de Privacidad</a>
+                <a href="#contacto">Contacto y Soporte</a>
+            </div>
+
+            <p class="footer-copy">&copy; 2026 A PUNTO DEL PIQUE S.A. - Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- INTERFACES MODALES -->
+    <div class="modal-overlay" id="modal-compra">
+        <div class="modal-box">
+            <h2>Datos de Facturación</h2>
+            <p class="producto-seleccionado-txt" id="prod-seleccionado">Artículo: </p>
+
+            <form id="formulario-registro" onsubmit="procesarFormulario(event)">
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" required placeholder="Ej: Juan">
+                </div>
+                <div class="form-group">
+                    <label for="apellido">Apellido:</label>
+                    <input type="text" id="apellido" required placeholder="Ej: Pérez">
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Número de Teléfono:</label>
+                    <input type="tel" id="telefono" required placeholder="Ej: 3624123456">
+                </div>
+                <div class="form-group">
+                    <label for="metodo-pago">¿Cómo desea abonar?</label>
+                    <select id="metodo-pago" required>
+                        <option value="" disabled selected>Seleccione una opción</option>
+                        <option value="Transferencia">Transferencia Bancaria / Virtual</option>
+                        <option value="Efectivo">Efectivo en Rapipago / Pago Fácil</option>
+                        <option value="Tarjeta">Tarjeta de Crédito / Débito</option>
+                    </select>
+                </div>
+
+                <div class="modal-buttons">
+                    <button type="button" class="btn-form btn-cancelar" onclick="cerrarModal()">Cancelar</button>
+                    <button type="submit" class="btn-form btn-confirmar">Confirmar Compra</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="foto-overlay" id="visor-foto" onclick="cerrarFotoGrande()">
+        <div class="foto-grande-contenedor" onclick="event.stopPropagation()">
+            <button type="button" class="btn-cerrar-foto" onclick="cerrarFotoGrande()">&times;</button>
+            <img src="" id="foto-ampliada" alt="Vista ampliada">
+        </div>
+    </div>
+
+    <script>
+        const productosRegistro = [
+            {
+                id: 1,
+                titulo: "Caña Tel. Caster Pacific",
+                descripcion: "2.40 metros, acción rápida, ideal para la captura de grandes depredadores.",
+                precio: "$45.500",
+                categoria: "canas",
+                imagen: "imagen/caña1.webp"
+            },
+            {
+                id: 8,
+                titulo: "Caña Tech Quattro 7",
+                descripcion: "2,10 metros, liviana y resistente, diseñada para ofrecer un buen equilibrio.",
+                precio: "$45.500",
+                categoria: "canas",
+                imagen: "imagen/caña2.webp"
+            },
+            {
+                id: 9,
+                titulo: "Caña Tel. Caster Oceanus",
+                descripcion: "caña telescópica de carbono diseñada para pesca variada.",
+                precio: "$45.500",
+                categoria: "canas",
+                imagen: "imagen/caña3.webp"
+            },
+            {
+                id: 2,
+                titulo: "Reel Caster Airforce 14000",
+                descripcion: "Un reel frontal de gran capacidad, pesca pesada de costa.",
+                precio: "$62.000",
+                categoria: "reels",
+                imagen: "imagen/reel1.webp"
+            },
+            {
+                id: 10,
+                titulo: "Reel Rotativo Baitcast 18r",
+                descripcion: "Reel rotativo robusto y confiable, ideal para pesca variada y de embarcado.",
+                precio: "$62.000",
+                categoria: "reels",
+                imagen: "imagen/reel2.webp"
+            },
+            {
+                id: 11,
+                titulo: "Reel Frontal Okuma",
+                descripcion: "6 rulemanes de acero inoxidable, arrastre suave y alta relación de giro.",
+                precio: "$62.000",
+                categoria: "reels",
+                imagen: "imagen/reel3.webp"
+            },
+            {
+                id: 3,
+                titulo: "Anzuelo 1095 Nickel Opaco",
+                descripcion: "Anzuelo fuerte y confiable de acabado níquel opaco, ideal para pesca variada.",
+                precio: "$8.900",
+                categoria: "anzuelos",
+                imagen: "imagen/anzuelo1.webp"
+            },
+            {
+                id: 12,
+                titulo: "Anzuelo 2330 Nickelado",
+                descripcion: "Anzuelo niquelado de diseño clásico, muy utilizado para pesca de río y laguna.",
+                precio: "$8.900",
+                categoria: "anzuelos",
+                imagen: "imagen/anzuelo2.webp"
+            },
+            {
+                id: 13,
+                titulo: "Anzuelos Mustad Tarpon",
+                descripcion: "Anzuelo de alta calidad diseñado para peces de gran porte.",
+                precio: "$8.900",
+                categoria: "anzuelos",
+                imagen: "imagen/anzuelo3.webp"
+            },
+            {
+                id: 4,
+                titulo: "Caja De Pesca Amberjack",
+                descripcion: "caja organizadora resistente y práctica, ideal para pesca.",
+                precio: "$12.400",
+                categoria: "accesorios",
+                imagen: "imagen/caja1.webp"
+            },
+            {
+                id: 5,
+                titulo: "Caja Caster Dos Bandejas",
+                descripcion: "Bandeja organizadora con divisiones amplias, perfecta para clasificar.",
+                precio: "$24.150",
+                categoria: "accesorios",
+                imagen: "imagen/caja2.webp"
+            },
+            {
+                id: 14,
+                titulo: "Pinza Multifuncion",
+                descripcion: "Herramienta indispensable para el pescador.",
+                precio: "$12.400",
+                categoria: "accesorios",
+                imagen: "imagen/pinza.webp"
+            },
+            {
+                id: 6,
+                titulo: " Xixian Chaleco Hombre ",
+                descripcion: "Chaleco cómodo y resistente, diseñado para actividades al aire libre.",
+                precio: "$31.800",
+                categoria: "indumentaria",
+                imagen: "imagen/chaleco1.jpg"
+            },
+            {
+                id: 15,
+                titulo: "Chaleco de pesca con mosca",
+                descripcion: "Chaleco liviano y funcional, equipado con numerosos bolsillos y compartimentos para organizar moscas.",
+                precio: "$31.800",
+                categoria: "indumentaria",
+                imagen: "imagen/chaleco2.jpg"
+            },
+            {
+                id: 16,
+                titulo: "Chaleco 2 piezas",
+                descripcion: "Conjunto compuesto por chaleco y sombrero, ideal para pesca y actividades al aire libre.",
+                precio: "$31.800",
+                categoria: "indumentaria",
+                imagen: "imagen/chaleco3.jpg"
+            },
+            {
+                id: 7,
+                titulo: "Señuelos Redfish",
+                descripcion: "Ideal para lances de larga distancia en ríos de corriente media.",
+                precio: "$1.500",
+                categoria: "senuelos",
+                imagen: "imagen/señuelo1.webp"
+            },
+            {
+                id: 17,
+                titulo: "Señuelos Original Floater",
+                descripcion: "Señuelo artificial de gran atractivo visual y movimiento natural.",
+                precio: "$1.500",
+                categoria: "senuelos",
+                imagen: "imagen/señuelo2.webp"
+            },
+            {
+                id: 18,
+                titulo: "Plomada Torpedo 60g",
+                descripcion: "Plomada de 60 g resistente y equilibrada, ideal para lograr buenos lanzamientos.",
+                precio: "$1.500",
+                categoria: "senuelos",
+                imagen: "imagen/plomada.webp"
+            }
+        ];
+
+        function renderizarGrid(listaProductos) {
+            const contenedor = document.getElementById('contenedor-productos');
+            contenedor.innerHTML = "";
+
+            if (listaProductos.length === 0) {
+                contenedor.innerHTML = "<p style='text-align:center; padding: 20px; font-weight: bold; width:100%;'>No se encontraron objetos de pesca.</p>";
+                return;
+            }
+
+            let filaActual = null;
+
+            listaProductos.forEach((producto, indice) => {
+                if (indice % 3 === 0) {
+                    filaActual = document.createElement('div');
+                    filaActual.className = 'grid-row';
+                    contenedor.appendChild(filaActual);
+                }
+
+                const columnaTarjeta = document.createElement('div');
+                columnaTarjeta.className = 'product-card';
+                columnaTarjeta.innerHTML = `
+                    <div class="product-card-inner">
+                        <img src="${producto.imagen}" alt="${producto.titulo}" class="product-image" style="cursor: zoom-in;" onclick="abrirFotoGrande('${producto.imagen}')">
+                        <div class="product-title">${producto.titulo}</div>
+                        <div class="product-description">${producto.descripcion}</div>
+                        <div class="product-price">${producto.precio}</div>
+                        <button class="buy-btn" onclick="abrirModal('${producto.titulo}', '${producto.precio}')">COMPRAR</button>
+                    </div>
+                `;
+
+                filaActual.appendChild(columnaTarjeta);
+            });
+        }
+
+        function abrirModal(nombreProducto, precioProducto) {
+            document.getElementById('prod-seleccionado').innerText = `Artículo: ${nombreProducto} (${precioProducto})`;
+            document.getElementById('modal-compra').classList.add('active');
+        }
+
+        function cerrarModal() {
+            document.getElementById('modal-compra').classList.remove('active');
+            document.getElementById('formulario-registro').reset();
+        }
+
+        function procesarFormulario(event) {
+            event.preventDefault();
+
+            const datosComprador = {
+                nombre: document.getElementById('nombre').value,
+                apellido: document.getElementById('apellido').value,
+                telefono: document.getElementById('telefono').value,
+                pago: document.getElementById('metodo-pago').value
+            };
+
+            alert(`¡Muchas gracias por tu compra, ${datosComprador.nombre}! \nNos comunicaremos al teléfono ${datosComprador.telefono} para coordinar el pago vía ${datosComprador.pago}.`);
+            cerrarModal();
+        }
+
+        document.querySelectorAll('.sidebar-list a').forEach(enlace => {
+            enlace.addEventListener('click', function (e) {
+                e.preventDefault();
+                const filtro = this.getAttribute('data-filter');
+                if (filtro === 'todos') {
+                    renderizarGrid(productosRegistro);
+                } else {
+                    const filtrados = productosRegistro.filter(p => p.categoria === filtro);
+                    renderizarGrid(filtrados);
+                }
+            });
+        });
+
+        function eliminarAcentos(texto) {
+            return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        }
+
+        function ejecutarBusqueda() {
+            const textoBuscado = eliminarAcentos(document.getElementById('input-buscador').value.toLowerCase().trim());
+            
+            const filtradosPorBusqueda = productosRegistro.filter(p => {
+                const tituloLimpio = eliminarAcentos(p.titulo.toLowerCase());
+                const descLimpia = eliminarAcentos(p.descripcion.toLowerCase());
+                return tituloLimpio.includes(textoBuscado) || descLimpia.includes(textoBuscado);
+            });
+            
+            renderizarGrid(filtradosPorBusqueda);
+        }
+
+        document.getElementById('btn-buscar').addEventListener('click', ejecutarBusqueda);
+        document.getElementById('input-buscador').addEventListener('keyup', function (e) {
+            if (e.key === 'Enter') ejecutarBusqueda();
+        });
+
+        function abrirFotoGrande(enlaceImagen) {
+            document.getElementById('foto-ampliada').src = enlaceImagen;
+            document.getElementById('visor-foto').classList.add('active');
+        }
+
+        function cerrarFotoGrande() {
+            document.getElementById('visor-foto').classList.remove('active');
+            setTimeout(() => {
+                document.getElementById('foto-ampliada').src = "";
+            }, 300);
+        }
+
+        renderizarGrid(productosRegistro);
+    </script>
+</body>
+
+</html>
