@@ -29,6 +29,10 @@
             color: var(--black);
             line-height: 1.6;
             overflow-x: hidden;
+            /* CORRECCIÓN: Fuerza al degradado a ocupar toda la pantalla siempre */
+            min-height: 100vh; 
+            display: flex;
+            flex-direction: column;
         }
 
         @keyframes entradaSuave {
@@ -48,9 +52,11 @@
             100% { background-position: 0% 50%; }
         }
 
+        /* CORRECCIÓN: Más alto y amplio para servidores públicos */
         header {
             text-align: center;
-            padding: 40px 20px;
+            padding: 60px 20px; 
+            width: 100%;
             background: linear-gradient(-45deg, rgba(212, 252, 121, 0.4), rgba(150, 230, 161, 0.4), rgba(245, 245, 220, 0.4));
             background-size: 400% 400%;
             animation: flujoAgua 12s ease infinite;
@@ -58,54 +64,59 @@
             border-bottom: 2px solid rgba(255, 255, 255, 0.3);
         }
 
+        /* CORRECCIÓN: Título más imponente y grande en web */
         h1 {
             font-family: 'Impact', 'Arial Black', sans-serif;
-            font-size: 3rem;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
+            font-size: 3.8rem; 
+            letter-spacing: 3px;
+            margin-bottom: 15px;
             color: #000000;
             text-shadow: -2px -2px 0 #ffffff,
                           2px -2px 0 #ffffff,
                          -2px  2px 0 #ffffff,
                           2px  2px 0 #ffffff;
+            text-transform: uppercase;
         }
 
         .subtitle {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             color: var(--dark-green);
             font-weight: 600;
+            margin-bottom: 10px;
         }
 
         .search-container {
-            max-width: 500px;
-            margin: 25px auto 0 auto;
+            max-width: 550px;
+            margin: 30px auto 0 auto;
             display: flex;
             gap: 10px;
         }
 
         .search-container input {
             flex: 1;
-            padding: 12px 20px;
+            padding: 14px 22px;
             border: 2px solid var(--dark-green);
             border-radius: 25px;
             font-size: 1rem;
             outline: none;
             transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.9);
         }
 
         .search-container input:focus {
-            box-shadow: 0 0 10px rgba(20, 83, 45, 0.3);
+            box-shadow: 0 0 15px rgba(20, 83, 45, 0.4);
             border-color: var(--black);
+            background-color: #ffffff;
         }
 
         .search-container button {
-            padding: 12px 25px;
+            padding: 14px 30px;
             background-color: var(--yellow);
             color: var(--black);
             border: 2px solid var(--dark-green);
             border-radius: 25px;
             font-family: 'Impact', sans-serif;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             letter-spacing: 1px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -119,9 +130,11 @@
 
         .main-container {
             max-width: 1200px;
-            margin: 30px auto;
+            width: 100%;
+            margin: 40px auto;
             padding: 0 20px;
             animation: entradaSuave 0.8s ease-out;
+            flex: 1; /* Empuja al footer abajo si hay pocos productos */
         }
 
         .store-intro {
@@ -148,6 +161,7 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
             background-color: #e2e8f0;
             min-height: 250px;
+            object-fit: contain;
         }
 
         .features-container {
@@ -342,8 +356,9 @@
             background-color: var(--silver);
             color: #334155;
             padding: 30px 20px;
-            margin-top: 60px;
+            margin-top: auto; /* Se queda abajo fijado pase lo que pase */
             border-top: 1px solid #94a3b8;
+            width: 100%;
         }
 
         .footer-content {
@@ -459,6 +474,11 @@
             border-radius: 6px;
             font-size: 1rem;
             outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--dark-green);
         }
 
         .modal-buttons {
@@ -710,7 +730,7 @@
             {
                 id: 10,
                 titulo: "Reel Rotativo Baitcast 18r",
-                descripcion: "Reel rotativo robusto y confiable, ideal para pesca variada y de embarcado.",
+                descripcion: "Reel rotativo robusto y confiable, ideal para pesca variada and de embarcado.",
                 precio: "$62.000",
                 categoria: "reels",
                 imagen: "imagen/reel2.webp"
@@ -747,3 +767,87 @@
                 categoria: "anzuelos",
                 imagen: "imagen/anzuelo3.webp"
             },
+            {
+                id: 4,
+                titulo: "Caja De Pesca Amberjack",
+                descripcion: "caja organizadora resistente y práctica, ideal para pesca.",
+                precio: "$12.400",
+                categoria: "accesorios",
+                imagen: "imagen/caja1.webp"
+            },
+            {
+                id: 5,
+                titulo: "Caja Caster Dos Bandejas",
+                descripcion: "Bandeja organizadora con divisiones amplias, perfecta para clasificar.",
+                precio: "$24.150",
+                categoria: "accesorios",
+                imagen: "imagen/caja2.webp"
+            },
+            {
+                id: 14,
+                titulo: "Pinza Multifuncion",
+                descripcion: "Herramienta indispensable para el pescador.",
+                precio: "$12.400",
+                categoria: "accesorios",
+                imagen: "imagen/pinza.webp"
+            },
+            {
+                id: 6,
+                titulo: " Xixian Chaleco Hombre ",
+                descripcion: "Chaleco cómodo y resistente, diseñado para actividades al aire libre.",
+                precio: "$31.800",
+                categoria: "indumentaria",
+                imagen: "imagen/chaleco1.jpg"
+            },
+            {
+                id: 15,
+                titulo: "Chaleco de pesca con mosca",
+                descripcion: "Chaleco liviano y funcional, equipado con numerosos bolsillos y compartimentos para organizar moscas.",
+                precio: "$31.800",
+                categoria: "indumentaria",
+                imagen: "imagen/chaleco2.jpg"
+            },
+            {
+                id: 16,
+                titulo: "Chaleco 2 piezas",
+                descripcion: "Conjunto compuesto por chaleco y sombrero, ideal para pesca y actividades al aire libre.",
+                precio: "$31.800",
+                categoria: "indumentaria",
+                imagen: "imagen/chaleco3.jpg"
+            },
+            {
+                id: 7,
+                titulo: "Señuelos Redfish",
+                descripcion: "Ideal para lances de larga distancia en ríos de corriente media.",
+                precio: "$1.500",
+                categoria: "senuelos",
+                imagen: "imagen/señuelo1.webp"
+            },
+            {
+                id: 17,
+                titulo: "Señuelos Original Floater",
+                descripcion: "Señuelo artificial de gran atractivo visual y movimiento natural.",
+                precio: "$1.500",
+                categoria: "senuelos",
+                imagen: "imagen/señuelo2.webp"
+            },
+            {
+                id: 18,
+                titulo: "Plomada Torpedo 60g",
+                descripcion: "Plomada de 60 g resistente y equilibrada, ideal para lograr buenos lanzamientos.",
+                precio: "$1.500",
+                categoria: "senuelos",
+                imagen: "imagen/plomada.webp"
+            }
+        ];
+
+        function renderizarGrid(listaProductos) {
+            const contenedor = document.getElementById('contenedor-productos');
+            contenedor.innerHTML = "";
+
+            if (listaProductos.length === 0) {
+                contenedor.innerHTML = "<p style='text-align:center; padding: 20px; font-weight: bold; width:100%;'>No se encontraron objetos de pesca.</p>";
+                return;
+            }
+
+            let filaActual
