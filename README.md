@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-
 <html lang="es">
 
 <head>
@@ -15,12 +13,6 @@
             --red: #ef4444;
             --white: #ffffff;
             --dark-green: #14532d;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
         }
 
         body {
